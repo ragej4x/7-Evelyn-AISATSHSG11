@@ -1,2 +1,0 @@
-class side_panel():
-    

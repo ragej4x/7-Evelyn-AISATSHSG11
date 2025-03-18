@@ -4,9 +4,9 @@ Elevate is a Kiosk POS system a self-service terminal that allows customers to p
 
 
 
-# Kiosk POS System using PyQt5
+# Kiosk POS System using pygame / pyQT5
 
-A **Kiosk POS (Point of Sale) System** is a self-service terminal that allows customers to independently place orders, make payments, and complete transactions. This project uses **PyQt5** to create an intuitive, user-friendly interface that streamlines operations for restaurants, retail stores, and other businesses.
+A **Kiosk POS (Point of Sale) System** is a self-service terminal that allows customers to independently place orders, make payments, and complete transactions. This project uses **PyQt5 / Pygame** to create an intuitive, user-friendly interface that streamlines operations for restaurants, retail stores, and other businesses.
 
 ---
 
@@ -22,7 +22,7 @@ A **Kiosk POS (Point of Sale) System** is a self-service terminal that allows cu
 - Edit quantities and view order summary.
 
 **Payment Processing**
-- Multiple payment options (cash, card, QR).
+- Multiple payment options (cash, QR, RFID).
 - Automatic total and tax calculation.
 - Receipt generation and printing.
 
@@ -40,7 +40,8 @@ A **Kiosk POS (Point of Sale) System** is a self-service terminal that allows cu
 
 - **Python 3.x** – Core functionality
 - **PyQt5** – GUI development
-- **json** – Data management
+- **Pygame** – GUI development
+- **Json** – Data management
 - **Win32** – PDF receipt generation
 
 ---
