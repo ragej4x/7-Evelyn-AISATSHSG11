@@ -1,25 +1,24 @@
 import pygame as pg
-import configparser
+import configparser, json
 
 # ----------- to do list -----------
-# side panels (left and right)
-# color scheme (dark and white)
-# side panel left item categories
+# side panels (left and right) - done
+# color scheme (dark and white) - done
+# side panel left item categories 
 # side panel right item details button etc
+# side panel expand button animation - done
+# item cards - done
 # main content
 # main content item details button etc
+# search bar
+# search bar filter
 # cart
 # checkout
-# search
 # settings
+# scroll wheel
 # about
 # help
 #----------------------------------
-
-
-
-
-
 
 
 
@@ -66,14 +65,77 @@ class side_panel:
         self.left_panel.fill(foreground)
         self.right_panel = pg.Surface((200, height))
         self.right_panel.fill(foreground)
-    
-    def animate(self):
-        pass
+        self.expand_button = pg.Surface((100, height))
+        self.expand_button.fill(highlight)
+        self.trigger_expand = False
+        self.animation_speed = 15
+        self.animate_frame_left_panel = 0
+
+
+        #item cards
+        self.item_card = pg.Surface((200, 250))
+        self.item_card.fill(foreground)
+
+    def panels(self):
+        # trigger ng animation
+        left_panel_rect = self.left_panel.get_rect(topleft=(0, 0))
+        if left_panel_rect.collidepoint(pg.mouse.get_pos()) and pg.mouse.get_pressed()[0]:
+            if not self.trigger_expand:
+                self.trigger_expand = True
+                print("Panel exp")
+            
+
+        elif not left_panel_rect.collidepoint(pg.mouse.get_pos()) and pg.mouse.get_pressed()[0]:
+            if self.trigger_expand:
+                self.trigger_expand = False
+                print("Panel col")
+
+        if self.trigger_expand == False:
+                self.left_panel = pg.Surface((self.animate_frame_left_panel + 100, height))
+                self.left_panel.fill(foreground)
+                self.animate_frame_left_panel -= self.animation_speed
+
+                if self.animate_frame_left_panel <= 0:
+                    self.animate_frame_left_panel = 0
+
+        if self.trigger_expand:
+            self.left_panel = pg.Surface((self.animate_frame_left_panel + 100, height))
+            self.left_panel.fill(foreground)
+            self.animate_frame_left_panel += self.animation_speed
+
+            if self.animate_frame_left_panel >= 200:
+                self.animate_frame_left_panel = 200
+
+
+    def items(self):
+        with open('data/item-data.json', 'r') as file:
+            data_items = json.load(file)
+
+        x_offset = 100
+        y_offset = 100
+        card_width = 200
+        card_height = 250
+        max_cards_per_row = 4
+        card_spacing = 30
+
+        for index, item in enumerate(data_items['items']):
+            if index % max_cards_per_row == 0 and index != 0:
+                x_offset = 100
+                y_offset += card_height + card_spacing
+
+            item_card = pg.Surface((card_width, card_height))
+            item_card.fill(foreground)
+            window.blit(item_card, (x_offset + 50, y_offset))
+            x_offset += card_width + card_spacing
+
 
     def draw(self):
         # lahat ng elems dto ddraw
+        #window.blit(self.expand_button, (0, 0))
+
         window.blit(self.left_panel, (0, 0))
         window.blit(self.right_panel, (width - 200, 0))
+        #window.blit(self.item_card, (150, height - height + 100))
 
 panel = side_panel()
 
@@ -90,4 +152,7 @@ def event_handler():
 while True:
     event_handler()
     panel.draw()
+    panel.panels()
+    panel.items()
     pg.display.update()
+    pg.time.Clock().tick(60)

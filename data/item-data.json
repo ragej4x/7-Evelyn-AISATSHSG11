@@ -23,6 +23,62 @@
             "stock_quantity": 200,
             "category": "condom",
             "image": "data/assets/condom.jpg"
+        },
+        {
+            "name": "Item 3",
+            "id": 3,
+            "value": 7.99,
+            "stock_quantity": 200,
+            "category": "condom",
+            "image": "data/assets/condom.jpg"
+        },
+        {
+            "name": "Item 3",
+            "id": 3,
+            "value": 7.99,
+            "stock_quantity": 200,
+            "category": "condom",
+            "image": "data/assets/condom.jpg"
+        },
+        {
+            "name": "Item 3",
+            "id": 3,
+            "value": 7.99,
+            "stock_quantity": 200,
+            "category": "condom",
+            "image": "data/assets/condom.jpg"
+        },
+        {
+            "name": "Item 3",
+            "id": 3,
+            "value": 7.99,
+            "stock_quantity": 200,
+            "category": "condom",
+            "image": "data/assets/condom.jpg"
+        },
+        {
+            "name": "Item 3",
+            "id": 3,
+            "value": 7.99,
+            "stock_quantity": 200,
+            "category": "condom",
+            "image": "data/assets/condom.jpg"
+        },
+        {
+            "name": "Item 3",
+            "id": 3,
+            "value": 7.99,
+            "stock_quantity": 200,
+            "category": "condom",
+            "image": "data/assets/condom.jpg"
+        },
+        {
+            "name": "Item 3",
+            "id": 3,
+            "value": 7.99,
+            "stock_quantity": 200,
+            "category": "condom",
+            "image": "data/assets/condom.jpg"
         }
     ]
 }
