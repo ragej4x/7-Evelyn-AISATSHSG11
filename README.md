@@ -40,7 +40,7 @@ A **Kiosk POS (Point of Sale) System** is a self-service terminal that allows cu
 
 - **Python 3.x** – Core functionality
 - **PyQt5** – GUI development
-- **json** – Database management
+- **json** – Data management
 - **Win32** – PDF receipt generation
 
 ---
