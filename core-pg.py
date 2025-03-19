@@ -10,6 +10,7 @@ import configparser, json
 # item cards - done
 # main content
 # main content item details button etc
+# buttons
 # search bar
 # search bar filter
 # cart
@@ -33,7 +34,7 @@ theme = config['Window']['theme']
 # ---- window settings ----
 
 window = pg.display.set_mode((width, height))
-pg.display.set_caption("Elevate Beta 0.1")
+pg.display.set_caption("7-Evelyn Beta 0.1")
 pg.display.set_icon(pg.image.load("data/icon.png"))
 pg.init()
 
@@ -47,13 +48,14 @@ if theme == "dark":
     background = (30, 30, 30)
     foreground = (50, 50, 50)
     highlight = (200, 200, 200)
+    panels = (40, 40, 40)
 
-
-#white mode
-if theme == "white":
+#light mode
+if theme == "light":
     background = (255, 255, 255)
     foreground = (200, 200, 200)
     highlight = (50, 50, 50)
+    panels = (220, 220, 220)
 
 
 
@@ -62,17 +64,21 @@ class side_panel:
     def __init__(self):
         # panels to
         self.left_panel = pg.Surface((100, height))
-        self.left_panel.fill(foreground)
+        self.left_panel.fill(panels)
         self.right_panel = pg.Surface((200, height))
-        self.right_panel.fill(foreground)
+        self.right_panel.fill(panels)
         self.expand_button = pg.Surface((100, height))
         self.expand_button.fill(highlight)
         self.trigger_expand = False
         self.animation_speed = 15
         self.animate_frame_left_panel = 0
 
+        self.scroll_offset_y = 0
 
         #item cards
+
+        self.animate_frame_item_category = 0
+
         self.item_card = pg.Surface((200, 250))
         self.item_card.fill(foreground)
 
@@ -92,7 +98,7 @@ class side_panel:
 
         if self.trigger_expand == False:
                 self.left_panel = pg.Surface((self.animate_frame_left_panel + 100, height))
-                self.left_panel.fill(foreground)
+                self.left_panel.fill(panels)
                 self.animate_frame_left_panel -= self.animation_speed
 
                 if self.animate_frame_left_panel <= 0:
@@ -100,16 +106,33 @@ class side_panel:
 
         if self.trigger_expand:
             self.left_panel = pg.Surface((self.animate_frame_left_panel + 100, height))
-            self.left_panel.fill(foreground)
+            self.left_panel.fill(panels)
             self.animate_frame_left_panel += self.animation_speed
 
-            if self.animate_frame_left_panel >= 200:
-                self.animate_frame_left_panel = 200
+            if self.animate_frame_left_panel >= 130:
+                self.animate_frame_left_panel = 130
+
+
+    def scroll_wheel(self, event):
+
+        #""" Scroll wheel trigger offset soo plus minus yung offset sa Y value ng items """
+
+        if event.type == pg.MOUSEBUTTONDOWN:
+            if event.button == 4:  
+                print("Scrolled up")
+                self.scroll_offset_y -= 50
+            elif event.button == 5:  
+                print("Scrolled down")
+                self.scroll_offset_y += 50
+
+        if self.scroll_offset_y >= 0:
+            self.scroll_offset_y = 0
+
 
 
     def items(self):
         with open('data/item-data.json', 'r') as file:
-            data_items = json.load(file)
+            self.data_items = json.load(file)
 
         x_offset = 100
         y_offset = 100
@@ -118,15 +141,44 @@ class side_panel:
         max_cards_per_row = 4
         card_spacing = 30
 
-        for index, item in enumerate(data_items['items']):
+        for index, item in enumerate(self.data_items['items']):
             if index % max_cards_per_row == 0 and index != 0:
                 x_offset = 100
                 y_offset += card_height + card_spacing
 
             item_card = pg.Surface((card_width, card_height))
             item_card.fill(foreground)
-            window.blit(item_card, (x_offset + 50, y_offset))
+            window.blit(item_card, (x_offset + 50, y_offset + self.scroll_offset_y))
             x_offset += card_width + card_spacing
+
+
+        
+
+
+    def left_pan_category(self):
+        font = pg.font.Font(None, 32)
+        y_offset = 20
+        for item in self.data_items['categories']:
+            
+            self.item_category = pg.Surface((50, 50))
+            self.item_category.fill(foreground)
+            window.blit(self.item_category, (25 , y_offset))
+
+
+            text = font.render(item['name'], True, highlight)
+            text.set_alpha(self.animate_frame_left_panel)
+            window.blit(text, (100, y_offset + 14))
+
+
+            y_offset += 90
+
+
+        self.animate_frame_item_category += self.animation_speed
+
+
+        if self.trigger_expand:
+            if self.animate_frame_item_category >= 255:
+                self.animate_frame_item_category = 255
 
 
     def draw(self):
@@ -142,17 +194,19 @@ panel = side_panel()
 # event handler dito lahat ng events
 def event_handler():
     window.fill(background)
+
     for event in pg.event.get():
         if event.type == pg.QUIT:
             pg.quit()
             quit()
-
+        panel.scroll_wheel(event)
 
 # main loop dito lahat ng functions na kailangan
 while True:
     event_handler()
-    panel.draw()
     panel.panels()
     panel.items()
+    panel.draw()
+    panel.left_pan_category()
     pg.display.update()
     pg.time.Clock().tick(60)
