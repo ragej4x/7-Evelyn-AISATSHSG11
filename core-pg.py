@@ -4,13 +4,16 @@ import configparser, json
 # ----------- to do list -----------
 # side panels (left and right) - done
 # color scheme (dark and white) - done
-# side panel left item categories 
+# side panel left item categories - done
 # side panel right item details button etc
 # side panel expand button animation - done
 # item cards - done
-# main content
-# main content item details button etc
+# main content - done
+# main content item details button etc - done
 # buttons
+# add to cart - done
+# remove from cart
+
 # search bar
 # search bar filter
 # cart
@@ -81,6 +84,8 @@ class side_panel:
 
         self.item_card = pg.Surface((200, 250))
         self.item_card.fill(foreground)
+        self.selected_category = None  # Add this line to store the selected category
+        self.mouse_pressed = False  # Initialize mouse_pressed attribute
 
     def panels(self):
         # trigger ng animation
@@ -118,7 +123,7 @@ class side_panel:
         #""" Scroll wheel trigger offset soo plus minus yung offset sa Y value ng items """
 
         if event.type == pg.MOUSEBUTTONDOWN:
-            if event.button == 4:  
+            if event.button == 4:
                 print("Scrolled up")
                 self.scroll_offset_y -= 50
             elif event.button == 5:  
@@ -129,11 +134,11 @@ class side_panel:
             self.scroll_offset_y = 0
 
 
-
-    def items(self):
+    def items(self, category=None):
         with open('data/item-data.json', 'r') as file:
             self.data_items = json.load(file)
 
+        #font = pg.font.Font(None, 12)
         x_offset = 100
         y_offset = 100
         card_width = 200
@@ -141,7 +146,11 @@ class side_panel:
         max_cards_per_row = 4
         card_spacing = 30
 
-        for index, item in enumerate(self.data_items['items']):
+        items_to_display = self.data_items['items']
+        if category:
+            items_to_display = [item for item in items_to_display if item['category'] == category]
+
+        for index, item in enumerate(items_to_display):
             if index % max_cards_per_row == 0 and index != 0:
                 x_offset = 100
                 y_offset += card_height + card_spacing
@@ -149,32 +158,75 @@ class side_panel:
             item_card = pg.Surface((card_width, card_height))
             item_card.fill(foreground)
             window.blit(item_card, (x_offset + 50, y_offset + self.scroll_offset_y))
+
+            # ================================ Item text/Image =====================================================
+            # Load and display item image
+            try:
+                item_image = pg.image.load(item['image'])
+                item_image = pg.transform.scale(item_image, (card_width - 20, card_height - 85))
+                image_rect = item_image.get_rect(center=(x_offset + card_width // 2 + 50, y_offset + self.scroll_offset_y + 95))
+                window.blit(item_image, image_rect)
+            except FileNotFoundError:
+                pass
+                #print(f"Image file not found: {item['image']}")
+            
+            font = pg.font.Font(None, 23)
+            text = font.render(item['name'], True, highlight)
+            text_rect = text.get_rect(center=(x_offset + card_width // 2 + 50, y_offset + self.scroll_offset_y + 195))
+            window.blit(text, text_rect)
+
+
+            # ================================ "Add to Cart" button =====================================================
+            add_to_cart_button = pg.Surface((card_width - 20, 30))
+            add_to_cart_button.fill(highlight)
+            button_rect = add_to_cart_button.get_rect(topleft=(x_offset + 60, y_offset + self.scroll_offset_y + card_height - 40))
+            window.blit(add_to_cart_button, button_rect.topleft)
+
+            font = pg.font.Font(None, 24)
+            button_text = font.render("Add to Cart", True, background)
+            window.blit(button_text, (button_rect.x + 45, button_rect.y + 7))
+
+            if button_rect.collidepoint(pg.mouse.get_pos()):
+                if pg.mouse.get_pressed()[0] and not self.mouse_pressed:
+                    self.add_to_cart(item)
+                    self.mouse_pressed = True
+                elif not pg.mouse.get_pressed()[0]:
+                    self.mouse_pressed = False
+
             x_offset += card_width + card_spacing
 
+    def add_to_cart(self, item):
+        try:
+            with open('data/user_data.json', 'r') as file:
+                cart_data = json.load(file)
+        except FileNotFoundError:
+            cart_data = []
 
-        
+        cart_data.append(item)
 
+        with open('data/user_data.json', 'w') as file:
+            json.dump(cart_data, file, indent=4)
 
     def left_pan_category(self):
         font = pg.font.Font(None, 32)
         y_offset = 20
         for item in self.data_items['categories']:
-            
             self.item_category = pg.Surface((50, 50))
             self.item_category.fill(foreground)
             window.blit(self.item_category, (25 , y_offset))
-
 
             text = font.render(item['name'], True, highlight)
             text.set_alpha(self.animate_frame_left_panel)
             window.blit(text, (100, y_offset + 14))
 
+            category_rect = self.item_category.get_rect(topleft=(25, y_offset))
+            if category_rect.collidepoint(pg.mouse.get_pos()) and pg.mouse.get_pressed()[0]:
+                self.selected_category = item['category']
+                print(f"Category selected: {self.selected_category}")
 
             y_offset += 90
 
-
         self.animate_frame_item_category += self.animation_speed
-
 
         if self.trigger_expand:
             if self.animate_frame_item_category >= 255:
@@ -205,7 +257,7 @@ def event_handler():
 while True:
     event_handler()
     panel.panels()
-    panel.items()
+    panel.items(panel.selected_category)
     panel.draw()
     panel.left_pan_category()
     pg.display.update()

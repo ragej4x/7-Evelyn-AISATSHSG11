@@ -1,38 +1,18 @@
 {
     "categories": [
         {
+            "name": "All",
+            "category": "",
+            "image": "data/assets/biscuit.jpg"
+        },
+        {
             "name": "Biscuit",
-            "id": 1,
+            "category": "biscuit",
             "image": "data/assets/biscuit.jpg"
         },
         {
             "name": "Alak",
-            "id": 2,
-            "image": "data/assets/biscuit.jpg"
-        },
-        {
-            "name": "Condom",
-            "id": 3,
-            "image": "data/assets/biscuit.jpg"
-        },
-        {
-            "name": "1",
-            "id": 4,
-            "image": "data/assets/biscuit.jpg"
-        },
-        {
-            "name": "5",
-            "id": 5,
-            "image": "data/assets/biscuit.jpg"
-        },
-        {
-            "name": "6",
-            "id": 6,
-            "image": "data/assets/biscuit.jpg"
-        },
-        {
-            "name": "7",
-            "id": 7,
+            "category": "alak",
             "image": "data/assets/biscuit.jpg"
         }
     ],
@@ -46,7 +26,7 @@
             "image": "data/assets/biscuit.jpg"
         },
         {
-            "name": "Item 2",
+            "name": "Item 2 dawdawdwa",
             "id": 2,
             "value": 15.49,
             "stock_quantity": 50,
@@ -54,68 +34,13 @@
             "image": "data/assets/alak.jpg"
         },
         {
-            "name": "Item 3",
-            "id": 3,
-            "value": 7.99,
-            "stock_quantity": 200,
-            "category": "1",
-            "image": "data/assets/condom.jpg"
-        },
-        {
-            "name": "Item 3",
-            "id": 3,
-            "value": 7.99,
-            "stock_quantity": 200,
-            "category": "1",
-            "image": "data/assets/condom.jpg"
-        },
-        {
-            "name": "Item 3",
-            "id": 3,
-            "value": 7.99,
-            "stock_quantity": 200,
-            "category": "3",
-            "image": "data/assets/condom.jpg"
-        },
-        {
-            "name": "Item 3",
-            "id": 3,
-            "value": 7.99,
-            "stock_quantity": 200,
-            "category": "1",
-            "image": "data/assets/condom.jpg"
-        },
-        {
-            "name": "Item 3",
-            "id": 3,
-            "value": 7.99,
-            "stock_quantity": 200,
-            "category": "5",
-            "image": "data/assets/condom.jpg"
-        },
-        {
-            "name": "Item 3",
-            "id": 3,
-            "value": 7.99,
-            "stock_quantity": 200,
-            "category": "6",
-            "image": "data/assets/condom.jpg"
-        },
-        {
-            "name": "Item 3",
-            "id": 3,
-            "value": 7.99,
-            "stock_quantity": 200,
-            "category": "7",
-            "image": "data/assets/condom.jpg"
-        },
-        {
-            "name": "Item 3",
-            "id": 3,
-            "value": 7.99,
-            "stock_quantity": 200,
-            "category": "1",
-            "image": "data/assets/condom.jpg"
+            "name": "Item 2",
+            "id": 2,
+            "value": 15.49,
+            "stock_quantity": 50,
+            "category": "alak",
+            "image": "data/assets/alak.jpg"
         }
+
     ]
 }

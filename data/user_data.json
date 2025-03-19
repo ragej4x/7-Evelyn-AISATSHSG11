@@ -1,0 +1,50 @@
+[
+    {
+        "name": "Item 2",
+        "id": 2,
+        "value": 15.49,
+        "stock_quantity": 50,
+        "category": "alak",
+        "image": "data/assets/alak.jpg"
+    },
+    {
+        "name": "Biscuit",
+        "id": 1,
+        "value": 10.99,
+        "stock_quantity": 100,
+        "category": "biscuit",
+        "image": "data/assets/biscuit.jpg"
+    },
+    {
+        "name": "Item 2",
+        "id": 2,
+        "value": 15.49,
+        "stock_quantity": 50,
+        "category": "alak",
+        "image": "data/assets/alak.jpg"
+    },
+    {
+        "name": "Item 2",
+        "id": 2,
+        "value": 15.49,
+        "stock_quantity": 50,
+        "category": "alak",
+        "image": "data/assets/alak.jpg"
+    },
+    {
+        "name": "Biscuit",
+        "id": 1,
+        "value": 10.99,
+        "stock_quantity": 100,
+        "category": "biscuit",
+        "image": "data/assets/biscuit.jpg"
+    },
+    {
+        "name": "Item 2 dawdawdwa",
+        "id": 2,
+        "value": 15.49,
+        "stock_quantity": 50,
+        "category": "alak",
+        "image": "data/assets/alak.jpg"
+    }
+]
