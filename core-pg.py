@@ -22,6 +22,13 @@ import configparser, json
 # scroll wheel
 # about
 # help
+
+
+
+# receipts
+# print receipt
+# covnert to pdf
+ # make own module {pussy.py} - module
 #----------------------------------
 
 
@@ -249,8 +256,11 @@ def event_handler():
 
     for event in pg.event.get():
         if event.type == pg.QUIT:
+            with open('data/user_data.json', 'w') as file:
+                json.dump([], file, indent=0)
+                
             pg.quit()
-            quit()
+
         panel.scroll_wheel(event)
 
 # main loop dito lahat ng functions na kailangan

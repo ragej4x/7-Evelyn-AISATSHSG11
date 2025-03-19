@@ -1,0 +1,7 @@
+fpdf
+configparser
+json
+PyPDF2
+textwrap
+win32print
+pygame-ce
