@@ -23,7 +23,8 @@ import configparser, json
 # about
 # help
 
-
+# settings gui
+# settings func
 
 # receipts
 # print receipt
@@ -196,6 +197,7 @@ class side_panel:
             if button_rect.collidepoint(pg.mouse.get_pos()):
                 if pg.mouse.get_pressed()[0] and not self.mouse_pressed:
                     self.add_to_cart(item)
+                    
                     self.mouse_pressed = True
                 elif not pg.mouse.get_pressed()[0]:
                     self.mouse_pressed = False
